@@ -9,8 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.HttpHeaders;
 
 import com.kohls.msp.common.BaseTestingStep;
@@ -41,11 +39,6 @@ public class LoyaltyFeatureStepsIT extends BaseTestingStep {
 	
 	@Value("${msp.channel}")
 	private String channel;
-
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		return new PropertySourcesPlaceholderConfigurer();
-	}
 
 	/*
 	 * 1. Scenario: Update Loyalty with email
@@ -80,11 +73,11 @@ public class LoyaltyFeatureStepsIT extends BaseTestingStep {
 		request = given().headers(buildHeaders()).body(file);
 	}
 
-	/*@When("^loyalty update service will be called$")
+	@When("^loyalty update service will be called$")
 	public void loyalty_update_service_will_be_called() throws Throwable { // RESTAssured REST API call response =
 		request.when().post("http://localhost:8003/v1/loyalty/profile");
 		System.out.println("response: " + response.prettyPrint());
-	}*/
+	}
 
 	@Then("^customer profile is updated$")
 	public void customer_profile_is_updated() throws Throwable {
