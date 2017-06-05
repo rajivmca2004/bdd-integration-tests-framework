@@ -1,6 +1,10 @@
 package com.kohls.msp.cucumber.runner;
 
 import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.rules.SpringClassRule;
+
+import com.kohls.msp.main.Application;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
@@ -12,12 +16,12 @@ import cucumber.api.junit.Cucumber;
  * @since 06/03/2017
  */
 @RunWith(Cucumber.class)
-@CucumberOptions(strict = false,
-		// features = { "src/test/resources/features" },
-		features = { "classpath:features/" },
-		plugin = { "pretty", "html:target/site/cucumber-pretty", "json:target/cucumber.json" }, 
-		tags = {"~@ignore" }, 
-		glue = { "cucumber.api.spring", "com.kohls.msp.cucumber.steps" })
+@CucumberOptions(features = { "classpath:features/" }, 
+				plugin = { "pretty", "html:target/site/cucumber-pretty","json:target/cucumber.json" }, 
+				tags = {"~@ignore" }, 
+				glue = { "cucumber.api.spring", "com.kohls.msp.cucumber.steps" })
+@ContextConfiguration(classes = Application.class)
 public class MspTestCucumberRunnerTest {
+	public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 
 }

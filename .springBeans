@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:com.kohls.msp.main.MspBddApplication</config>
+		<config>java:com.kohls.msp.main.Application</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
