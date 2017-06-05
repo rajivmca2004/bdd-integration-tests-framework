@@ -19,9 +19,11 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(features = { "classpath:features/" }, 
 				plugin = { "pretty", "html:target/site/cucumber-pretty","json:target/cucumber.json" }, 
 				tags = {"~@ignore" }, 
-				glue = { "cucumber.api.spring", "com.kohls.msp.cucumber.steps" })
+				glue = { "cucumber.api.spring", "com.kohls.msp.cucumber.steps"},
+				strict = false
+				)
 @ContextConfiguration(classes = Application.class)
-public class MspTestCucumberRunnerTest {
+public class MspTestCucumberRunner {
 	public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 
 }

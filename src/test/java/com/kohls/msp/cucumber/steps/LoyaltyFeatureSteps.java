@@ -26,7 +26,7 @@ import io.restassured.specification.RequestSpecification;
  * @author rajiv.srivastava@kohls.com
  * @since 06/01/2017
  */
-public class LoyaltyFeatureStepsIT extends BaseTestingStep {
+public class LoyaltyFeatureSteps extends BaseTestingStep {
 
 	private Response response;
 	private RequestSpecification request;
