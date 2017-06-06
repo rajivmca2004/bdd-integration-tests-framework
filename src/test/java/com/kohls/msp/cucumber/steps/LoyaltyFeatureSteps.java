@@ -21,20 +21,20 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 /**
- * Black Box testing BDD POC with Junit+ Cucumber + RESTAssured + AssertJ+SpringBoot Spring Boot
+ * Black Box testing BDD - Loyalty Integration Tests
  *
  * @author rajiv.srivastava@kohls.com
  * @since 06/01/2017
  */
 public class LoyaltyFeatureSteps extends BaseTestingStep {
 
-	@Value("${msp.contentType}")
+	@Value("${msp.contentType.header}")
 	private String contentType;
 	
-	@Value("${msp.correlationId}")
+	@Value("${msp.loyalty.correlationId.header}")
 	private String correlationId;
 	
-	@Value("${msp.channel}")
+	@Value("${msp.loyalty.channel.header}")
 	private String channel;
 	
 	@Value("${msp.loyalty.host}")
@@ -52,19 +52,15 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 	/*
 	 * All Initial config code will go here for #Loyalty Services
 	 */
-	@Given("^config setup$")
+	@Given("^config setup for Loyalty$")
 	public void config_setup() throws Throwable {
-		System.out.println("BDD Integration Testing Initialize");
 		headers= buildHeaders();
-		System.out.println("Headers"+headers.toString());
-
 	}
 
 	@Given("^when send the updated loyalty values with request body \"([^\"]*)\"$")
 	public void when_send_the_updated_loyalty_values_with_request_body(String fileBody) throws Throwable {
-		System.out.println("BDD Integration Testing Initialize"+fileBody);
-		byte[] file = Files.readAllBytes(Paths.get(fileBody));
 		// Prepare request
+		byte[] file = Files.readAllBytes(Paths.get(fileBody));
 		request = given().headers(headers).body(file);
 	}
 
@@ -110,7 +106,7 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(BddEnum.CONTENT_TYPE.value(), contentType);
 		// Note:Need to change access token after expiry
-		headers.set(BddEnum.ACCESS_TOKEN.value(), "9A3mUbG74XDMHbDa1RHi87gFAnmu");
+		headers.set(BddEnum.ACCESS_TOKEN.value(), "TGSJLh3fr7f5GW6mAwytDf5ATlKs");
 		headers.set(BddEnum.X_CORRELATION_ID.value(), correlationId);
 		headers.set(BddEnum.X_CHANNEL.value(), channel);
 		return headers;
