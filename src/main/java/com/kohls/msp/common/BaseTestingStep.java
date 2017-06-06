@@ -13,7 +13,7 @@ import com.kohls.msp.main.Application;
  * @since 06/01/2017
  */
 @ContextConfiguration(classes = { Application.class })
-@TestPropertySource(locations = "classpath:properties/msp-loyalty.properties")
+@TestPropertySource(locations = {"classpath:properties/msp-loyalty.properties","classpath:application.properties"})
 public abstract class BaseTestingStep {
 
 	protected abstract HttpHeaders buildHeaders();
