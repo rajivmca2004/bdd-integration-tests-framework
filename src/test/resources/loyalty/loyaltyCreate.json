@@ -1,0 +1,15 @@
+{
+  "email": "rajivtest1@kohls.com",
+  "phone": {
+    "phoneNumber": "1234567890",
+    "phoneNumberType": "Home"
+  },
+  "dob": "1983-11-14",
+  "address": {
+    "addr1": "1425 cedar",
+    "addr2": "",
+    "city": "San Jose",
+    "state": "CA",
+    "postalCode": "87712"
+  }
+}
