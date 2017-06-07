@@ -28,12 +28,10 @@ import io.restassured.specification.RequestSpecification;
  */
 public class LoyaltyFeatureSteps extends BaseTestingStep {
 
+	private static final String CHANNEL = "MCOM";
 	private static final String LOYALTY_CORRELATION_ID = "fdafadf";
 	private static final String APPLICATION_JSON="application/json";
 
-	@Value("${msp.loyalty.channel.header}")
-	private String channel;
-	
 	@Value("${msp.loyalty.host}")
 	private String loyaltyHost;
 	
@@ -63,7 +61,7 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 	
 	@Given("^channel id for loyaty is \"([^\"]*)\"$")
 	public void channel_id_for_loyaty_is(String arg1) throws Throwable {
-		headers.set(BddEnum.X_CHANNEL.value(), channel);
+		headers.set(BddEnum.X_CHANNEL.value(), CHANNEL);
 	}
 
 	@When("^loyalty update service will be called$")
@@ -108,9 +106,8 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(BddEnum.CONTENT_TYPE.value(), APPLICATION_JSON);
 		// Note:Need to change access token after expiry
-		headers.set(BddEnum.ACCESS_TOKEN.value(), "unxbeHnM3oWnSvVHSYeZMTmAt0hA");
+		headers.set(BddEnum.ACCESS_TOKEN.value(), "hfO1FTcI1AGPWGTd7rC4Gxu6ca3z");
 		headers.set(BddEnum.X_CORRELATION_ID.value(), LOYALTY_CORRELATION_ID);
-		headers.set(BddEnum.X_CHANNEL.value(), channel);
 		return headers;
 	}
 }

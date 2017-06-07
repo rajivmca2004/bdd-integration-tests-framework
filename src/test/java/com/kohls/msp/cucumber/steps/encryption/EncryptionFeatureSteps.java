@@ -32,15 +32,10 @@ import io.restassured.specification.RequestSpecification;
  */
 public class EncryptionFeatureSteps extends BaseTestingStep {
 	
+	private static final String CHANNEL = "ios";
 	private static final String ENCRYPTION_CORRELATION_ID = "fdafadf";
 	private static final String APPLICATION_JSON="application/json";
 
-	@Value("${msp.accept.header}")
-	private String accept;
-	
-	@Value("${msp.encryption.channel.header}")
-	private String channel;
-	
 	@Value("${msp.encryption.host}")
 	private String encryptionHost;
 	
@@ -70,7 +65,7 @@ public class EncryptionFeatureSteps extends BaseTestingStep {
 	
 	@Given("^channel id for encryption is \"([^\"]*)\"$")
 	public void channel_id_for_encryption_is(String arg1) throws Throwable {
-		headers.set(BddEnum.X_CHANNEL.value(), channel);
+		headers.set(BddEnum.X_CHANNEL.value(), CHANNEL);
 	}
 
 	@When("^encryption service will be called$")
@@ -118,7 +113,7 @@ public class EncryptionFeatureSteps extends BaseTestingStep {
 	@Override
 	protected HttpHeaders buildHeaders() {
 		HttpHeaders headers = new HttpHeaders();
-		headers.set(BddEnum.ACCEPT.value(), accept);
+		headers.set(BddEnum.ACCEPT.value(), APPLICATION_JSON);
 		headers.set(BddEnum.X_CORRELATION_ID.value(), ENCRYPTION_CORRELATION_ID);
 		headers.set(BddEnum.CONTENT_TYPE.value(),APPLICATION_JSON );
 		return headers;
