@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.kohls.msp.cucumber.steps;
+package com.kohls.msp.cucumber.steps.encryption;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
