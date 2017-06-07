@@ -32,17 +32,14 @@ import io.restassured.specification.RequestSpecification;
  */
 public class EncryptionFeatureSteps extends BaseTestingStep {
 	
+	private static final String ENCRYPTION_CORRELATION_ID = "fdafadf";
+	private static final String APPLICATION_JSON="application/json";
+
 	@Value("${msp.accept.header}")
 	private String accept;
 	
-	@Value("${msp.encryption.correlationId.header}")
-	private String correlationId;
-	
 	@Value("${msp.encryption.channel.header}")
 	private String channel;
-	
-	@Value("${msp.contentType.header}")
-	private String contenType;
 	
 	@Value("${msp.encryption.host}")
 	private String encryptionHost;
@@ -69,6 +66,11 @@ public class EncryptionFeatureSteps extends BaseTestingStep {
 		// Prepare request
 		byte[] file = Files.readAllBytes(Paths.get(fileBody));
 		request = given().headers(headers).body(file);
+	}
+	
+	@Given("^channel id for encryption is \"([^\"]*)\"$")
+	public void channel_id_for_encryption_is(String arg1) throws Throwable {
+		headers.set(BddEnum.X_CHANNEL.value(), channel);
 	}
 
 	@When("^encryption service will be called$")
@@ -99,15 +101,15 @@ public class EncryptionFeatureSteps extends BaseTestingStep {
 	public void decryption_service_will_be_called() throws Throwable {
 		decryptResponse = request.when().post(encryptionHost.concat(MspApiEnum.DECRYPT_API.value()));
 	}
-
-	@Then("^decrypted string is returned \"([^\"]*)\"$")
-	public void decrypted_string_is_returned(String fileBody) throws Throwable {
+	
+	@Then("^decrypted plain text JSON is returned \"([^\"]*)\"$")
+	public void decrypted_plain_text_JSON_is_returned(String fileBody) throws Throwable {
 		assertThat(decryptResponse.getStatusCode()).isEqualTo(200);
 		/*
 		 *  Comparing decrypted JSON response fron the decrypt API with the actual request JSON of the Encrypt API
 		 *  Assert for JSON comparison
 		 */
-		assertEquals(BddTestUtil.readJsonFile("src/test/resources/mockJson/encyptionRequest.json"), decryptResponse.getBody().asString(), true);
+		assertEquals(BddTestUtil.readJsonFile("src/test/resources/encryption/encryptionRequest.json"), decryptResponse.getBody().asString(), true);
 	}
 	
 	/*
@@ -117,9 +119,8 @@ public class EncryptionFeatureSteps extends BaseTestingStep {
 	protected HttpHeaders buildHeaders() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(BddEnum.ACCEPT.value(), accept);
-		headers.set(BddEnum.X_CORRELATION_ID.value(), correlationId);
-		headers.set(BddEnum.X_CHANNEL.value(), channel);
-		headers.set(BddEnum.CONTENT_TYPE.value(),contenType );
+		headers.set(BddEnum.X_CORRELATION_ID.value(), ENCRYPTION_CORRELATION_ID);
+		headers.set(BddEnum.CONTENT_TYPE.value(),APPLICATION_JSON );
 		return headers;
 	}
 }

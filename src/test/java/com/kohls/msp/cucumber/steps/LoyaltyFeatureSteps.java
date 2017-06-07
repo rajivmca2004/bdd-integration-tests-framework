@@ -28,12 +28,9 @@ import io.restassured.specification.RequestSpecification;
  */
 public class LoyaltyFeatureSteps extends BaseTestingStep {
 
-	@Value("${msp.contentType.header}")
-	private String contentType;
-	
-	@Value("${msp.loyalty.correlationId.header}")
-	private String correlationId;
-	
+	private static final String LOYALTY_CORRELATION_ID = "fdafadf";
+	private static final String APPLICATION_JSON="application/json";
+
 	@Value("${msp.loyalty.channel.header}")
 	private String channel;
 	
@@ -57,11 +54,16 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 		headers= buildHeaders();
 	}
 
-	@Given("^when send the updated loyalty values with request body \"([^\"]*)\"$")
-	public void when_send_the_updated_loyalty_values_with_request_body(String fileBody) throws Throwable {
+	@Given("^send the updated loyalty values with request body \"([^\"]*)\"$")
+	public void send_the_updated_loyalty_values_with_request_body(String fileBody) throws Throwable {
 		// Prepare request
 		byte[] file = Files.readAllBytes(Paths.get(fileBody));
 		request = given().headers(headers).body(file);
+	}
+	
+	@Given("^channel id for loyaty is \"([^\"]*)\"$")
+	public void channel_id_for_loyaty_is(String arg1) throws Throwable {
+		headers.set(BddEnum.X_CHANNEL.value(), channel);
 	}
 
 	@When("^loyalty update service will be called$")
@@ -104,10 +106,10 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 	@Override
 	protected HttpHeaders buildHeaders() {
 		HttpHeaders headers = new HttpHeaders();
-		headers.set(BddEnum.CONTENT_TYPE.value(), contentType);
+		headers.set(BddEnum.CONTENT_TYPE.value(), APPLICATION_JSON);
 		// Note:Need to change access token after expiry
-		headers.set(BddEnum.ACCESS_TOKEN.value(), "TGSJLh3fr7f5GW6mAwytDf5ATlKs");
-		headers.set(BddEnum.X_CORRELATION_ID.value(), correlationId);
+		headers.set(BddEnum.ACCESS_TOKEN.value(), "unxbeHnM3oWnSvVHSYeZMTmAt0hA");
+		headers.set(BddEnum.X_CORRELATION_ID.value(), LOYALTY_CORRELATION_ID);
 		headers.set(BddEnum.X_CHANNEL.value(), channel);
 		return headers;
 	}
