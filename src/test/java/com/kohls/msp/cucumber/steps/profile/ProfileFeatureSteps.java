@@ -66,13 +66,9 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 	public void customer_is_able_to_login() throws Throwable {
 	}
 
-	@Then("^response is \"([^\"]*)\"$")
-	public void response_is(String statusCode) throws Throwable {
-		assertThat(response.getStatusCode()).isEqualTo(Integer.parseInt(statusCode));
-	}
-
-	@Then("^response is not empty$")
-	public void response_is_not_empty() throws Throwable {
+	@Then("^response is (\\d+)$")
+	public void response_is(int statusCode) throws Throwable {
+		assertThat(response.getStatusCode()).isEqualTo(statusCode);
 	}
 
 	/*

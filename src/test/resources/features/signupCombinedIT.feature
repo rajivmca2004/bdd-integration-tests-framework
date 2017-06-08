@@ -1,3 +1,4 @@
+#@ignore
 Feature: Cucumber - Combined Integration Test for multiple Services 
 
 Scenario Outline: Create an encrypted Json
@@ -9,7 +10,7 @@ Scenario Outline: Create an encrypted Json
 		|    src/test/resources/encryption/encryptionRequest.json |
 
 Scenario Outline:: Decrypt valid JSON body 
-	Given send encrypted  valid request JSON with body
+	Given send encrypted valid request JSON with body
 	When decryption service will be called 
 	Then decrypted plain text JSON is returned "<body>"
 	Examples: 

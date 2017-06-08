@@ -102,9 +102,10 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 		response=request.when().post(loyaltyHost.concat(MspApiEnum.LOYALTY_API.value()));
 	}
 
-	@Then("^customer profile is sucessfully created$")
-	public void customer_profile_is_sucessfully_created() throws Throwable {
-		assertThat(response.getStatusCode()).isEqualTo(200);
+	
+	@Then("^customer profile is sucessfully created (\\d+) or existed (\\d+)$")
+	public void customer_profile_is_sucessfully_created_or_existed(int ok, int error) throws Throwable {
+		assertThat(response.getStatusCode()).isIn(ok, error);
 	}
 	
 	@Override
@@ -112,7 +113,7 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON);
 		// Note:Need to change access token after expiry
-		headers.set(BddEnum.ACCESS_TOKEN.value(), "hfO1FTcI1AGPWGTd7rC4Gxu6ca3z");
+		headers.set(BddEnum.ACCESS_TOKEN.value(), "uZV8p1Ows3K9bMw5JAfjfEz6jhfa");
 		headers.set(BddEnum.X_CORRELATION_ID.value(), LOYALTY_CORRELATION_ID);
 		return headers;
 	}

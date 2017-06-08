@@ -1,3 +1,4 @@
+#@ignore
 @encryptionServices
 Feature: Cucumber - Encryption Decryption Microservices Integration Test 
 
