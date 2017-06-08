@@ -14,6 +14,7 @@ import com.kohls.msp.common.BaseTestingStep;
 import com.kohls.msp.common.BddEnum;
 import com.kohls.msp.common.MspApiEnum;
 
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -39,7 +40,12 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 	private RequestSpecification request;
 	
 	private static HttpHeaders headers;
-	
+
+	@Before
+	public void setUp() {
+		//Initialization code will go here
+	}
+
 	/*
 	 * 1. Scenario: Update Loyalty with/without email
 	 */
@@ -104,7 +110,7 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 	@Override
 	protected HttpHeaders buildHeaders() {
 		HttpHeaders headers = new HttpHeaders();
-		headers.set(BddEnum.CONTENT_TYPE.value(), APPLICATION_JSON);
+		headers.set(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON);
 		// Note:Need to change access token after expiry
 		headers.set(BddEnum.ACCESS_TOKEN.value(), "hfO1FTcI1AGPWGTd7rC4Gxu6ca3z");
 		headers.set(BddEnum.X_CORRELATION_ID.value(), LOYALTY_CORRELATION_ID);

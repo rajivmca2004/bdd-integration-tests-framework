@@ -18,6 +18,7 @@ import com.kohls.msp.common.BddEnum;
 import com.kohls.msp.common.BddTestUtil;
 import com.kohls.msp.common.MspApiEnum;
 
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -43,6 +44,11 @@ public class EncryptionFeatureSteps extends BaseTestingStep {
 	
 	private static Response encryptResponse, decryptResponse;
 	private RequestSpecification request;
+	
+	@Before
+	public void setUp() {
+		//Initialization code will go here
+	}
 	
 	/*
 	 * All Initial config code will go here for #Loyalty Services
@@ -113,9 +119,9 @@ public class EncryptionFeatureSteps extends BaseTestingStep {
 	@Override
 	protected HttpHeaders buildHeaders() {
 		HttpHeaders headers = new HttpHeaders();
-		headers.set(BddEnum.ACCEPT.value(), APPLICATION_JSON);
+		headers.set(HttpHeaders.ACCEPT, APPLICATION_JSON);
 		headers.set(BddEnum.X_CORRELATION_ID.value(), ENCRYPTION_CORRELATION_ID);
-		headers.set(BddEnum.CONTENT_TYPE.value(),APPLICATION_JSON );
+		headers.set(HttpHeaders.CONTENT_TYPE,APPLICATION_JSON );
 		return headers;
 	}
 }

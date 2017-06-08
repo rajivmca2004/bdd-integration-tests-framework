@@ -8,8 +8,10 @@ import java.io.FileReader;
 import org.json.simple.parser.JSONParser;
 
 /**
- * @author rajiv.srivastava1
+ * This class contains BDD common utility methods
  *
+ * @author rajiv.srivastava@kohls.com
+ * @since 06/01/2017
  */
 public class BddTestUtil {
 
