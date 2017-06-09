@@ -10,7 +10,7 @@ public enum MspApiEnum {
 	LOYALTY_API("/v1/loyalty"),
 	ENCRYPT_API("/v1/encrypt"),
 	DECRYPT_API("/v1/decrypt"),
-	OAPI_SIGNIN_PROFILE_API("/kohls/adapters/rest/v2/auth/signInProfile");
+	OAPI_SIGNIN_PROFILE_API("/token");
 
 	private String value;
 

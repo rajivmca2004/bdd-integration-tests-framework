@@ -3,11 +3,15 @@
 Feature: Cucumber -  SignUp Services Integration Test 
 
 Scenario Outline: set initial configuration for SignUp Services 
-	Given login with user credetials with login text body "<body>"
-	And has authorization id <token>
-	When signup service is called
-	Then customer is able to login
-	And response is 200
+	Given app API Key header "<x-app-api_key>"
+	And grant type is "<grant_type>"
+	And user id is "<userId>"
+	And user password is "<password>"
+	And client id is "<client_id>"
+	And secret is "<secret>"
+	When access token service is called
+	Then retrun access token
+	And response code is 200
 	Examples: 
-		| body | token |
-		| grant_type=password&userId=rajivtest1@kohls.com&password=Kohls123 | "Bearer eyJhbGciOiJSUzI1NiIsImpwayI6eyJhbGciOiJSU0EiLCJleHAiOiJBUUFCIiwibW9kIjoiQU0wRGQ3eEFkdjZILXlnTDdyOHFDTGRFLTNJMmtrNDV6Z1p0RGRfcXM4ZnZuWWZkaXFUU1Y0XzJ0Nk9HRzhDVjVDZTQxUE1wSXdtTDQxMFg5SVpudmh4b1lpRmNNU2FPZUlxb2UtckpBMHVadXcyckhoWFozV1ZDZUtlelJWY0NPWXNRTi1tUUswbWZ6NV8zby1ldjBVWXdYa1NPd0JCbDFFaHFJd1ZEd09pZWcySk1HbDBFWHNQWmZrTlpJLUhVNG9NaWktVHJOTHpSV2tNbUx2bTA5aEw1em9zVU5BMTV2ZUNLcGgyV3BtU20yUzYxbkRoSDdnTEVveW1EblRFalBZNUFvaDJpbkktMzZSR1lWTVVVYk80NkNyTlVZdUlvYk9pWGxMekJJaHVJQ3BmVmR4VF94N3N0S1g1QzlCZk1UQjRHa09IUDVjVXY3TnoxZERoSVB1OCJ9fQ.eyJleHAiOjE0OTI2ODYwODAsImltZi5zY29wZSI6eyJ3bF9hbm9ueW1vdXNVc2VyUmVhbG0iOnsiZXhwIjoxNDkyNjg2MDgwfX0sImlzcyI6Imh0dHBzOlwvXC9rZDA5LmttLnNsLmVkc3QuaWJtLmNvbTo5NDQzXC9rb2hsc1wvYXV0aG9yaXphdGlvblwvIiwicHJuIjoia29obHNBZGFwdGVyVGVzdGVyIn0.t3Oqe4Qtzgy0ZMWrFJ_U4D9zPuO8vHdN_irTCPP_bS6TrxN0n7-WdUpWQqjNuOVDBE7o8QFwr2P6vW1eWrLvFyTivB9OcwAxksHrNJo_Ek4IeIQHLjE_lKgKDiaAqOPb-Vf-mYyLB6Jeck5a196nQ9Sb6pQ9cu6Z6fhdmJ3V-ZPHEHSKsCGzlM8qahLwHED82qwAQ7KPZTx7urwSc84xnkeVzFereuikIWVHdpCmOjQ_sd9W1TkwhurGR7iTPwa9PbTxuGjBmXI4F5XQnTvwlto9FJ-noFH53oWm5oidpeAU6hC9PfSTOAq9-hS8WDgnt5ot1kH4m0sY86SkJAkwog" |
+		|x-app-api_key  | grant_type | userId | password | client_id | secret |
+		| JBmYK1DyITEQAmUa27kWIpOjSZyyHAJR | password | rajivtest1@kohls.com | Kohls123 | JBmYK1DyITEQAmUa27kWIpOjSZyyHAJR | KnyK31GAMz585uAU |

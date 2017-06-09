@@ -8,7 +8,8 @@ package com.kohls.msp.common;
 public enum BddEnum {
 	X_CORRELATION_ID("x-correlation-id"), 
 	X_CHANNEL("x-channel"),
-	ACCESS_TOKEN("access_token");
+	ACCESS_TOKEN("access_token"),
+	X_APP_API_KEY("x-app-api_key");
 
 	private String value;
 
