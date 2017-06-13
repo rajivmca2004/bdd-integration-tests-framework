@@ -1,9 +1,10 @@
+#@ignore
 Feature: Cucumber - Combined Integration Test for multiple Services 
 
 Scenario Outline: Create an encrypted Json
 	Given send the plain string with request body "<body>" 
 	When encryption service will be called 
-	Then encrypted string is returned 
+	Then status code 200 ok is returend
 	Examples: 
 		| body |
 		|    src/test/resources/encryption/encryptionRequest.json |
@@ -11,10 +12,11 @@ Scenario Outline: Create an encrypted Json
 Scenario Outline:: Decrypt valid JSON body 
 	Given send encrypted  valid request JSON with body
 	When decryption service will be called 
-	Then decrypted plain text JSON is returned "<body>"
-	Examples: 
+	Then status code 200 ok is returned
+	And return expected response message "<body>"
+	Examples:
 		| body |
-		|    src/test/resources/encryption/encryptionRequest.json | 
+		| src/test/resources/encryption/encryptionRequest.json | 
 	
 Scenario Outline: Signup for loyalty 
 	Given send the updated loyalty values with request body "<body>" 

@@ -1,11 +1,15 @@
 package com.kohls.msp.common;
-
+/**
+ * This class contains common Constants
+ *
+ * @author rajiv.srivastava@kohls.com
+ * @since 06/01/2017
+ */
 public enum BddEnum {
-	CONTENT_TYPE("content-type"), 
-	ACCESS_TOKEN("access_token"), 
 	X_CORRELATION_ID("x-correlation-id"), 
-	X_CHANNEL("x-channel"), 
-	ACCEPT("Accept") ;
+	X_CHANNEL("x-channel"),
+	ACCESS_TOKEN("access_token"),
+	X_APP_API_KEY("x-app-api_key");
 
 	private String value;
 

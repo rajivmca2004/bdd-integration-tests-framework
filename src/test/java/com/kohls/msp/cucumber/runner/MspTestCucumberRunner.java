@@ -21,6 +21,7 @@ import cucumber.api.junit.Cucumber;
 				tags = {"~@ignore" }, 
 				glue = { "cucumber.api.spring", "com.kohls.msp.cucumber.steps"},
 				strict = false
+				//,dryRun=true
 				)
 @ContextConfiguration(classes = Application.class)
 public class MspTestCucumberRunner {

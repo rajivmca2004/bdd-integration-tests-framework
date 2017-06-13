@@ -1,13 +1,14 @@
+#@ignore
 @loyaltyService 
 Feature: Cucumber - Loyalty Microservices Integration Test 
 
 Scenario Outline: set initial configuration for Loyalty Microservices 
 	Given config setup for Loyalty
-	And channel id for loyaty is "<channel>"
+	And channel id for loyalty is "<channel>"
 	Examples: 
 		| channel |
-		|    MCOM |
-		
+		|    IOS |
+
 Scenario Outline: update Loyalty 
 	Given send the updated loyalty values with request body "<body>" 
 	When loyalty update service will be called 
@@ -16,12 +17,12 @@ Scenario Outline: update Loyalty
 		| body |
 		|    src/test/resources/loyalty/loyaltyUpdate.json |
 		|    src/test/resources/loyalty/loyaltyUpdateWithEmail.json |
-		
-		#@ignore	
+
+@ignore		
 Scenario Outline: Create Loyalty Profile 
 	Given input create customer data with request body "<body>" 
 	When create loyalty profile service will be called 
-	Then customer profile is sucessfully created 
+	Then customer profile is sucessfully created 200 or existed 400
 	Examples: 
 		| body |
 		|    src/test/resources/loyalty/loyaltyCreate.json |
