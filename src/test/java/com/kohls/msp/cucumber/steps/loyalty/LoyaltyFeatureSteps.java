@@ -46,10 +46,6 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 	
 	private static String accessToken;
 	
-	@Before
-	public void setUp() {
-		//Initialization code will go here
-	}
 
 	/*
 	 * 1. Scenario: Update Loyalty with/without email

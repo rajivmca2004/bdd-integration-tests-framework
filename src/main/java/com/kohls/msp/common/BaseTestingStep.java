@@ -19,5 +19,4 @@ public abstract class BaseTestingStep {
 	protected abstract HttpHeaders buildHeaders();
 
 	protected abstract HttpHeaders buildHeaders(HttpHeaders httpHeaders);
-
 }

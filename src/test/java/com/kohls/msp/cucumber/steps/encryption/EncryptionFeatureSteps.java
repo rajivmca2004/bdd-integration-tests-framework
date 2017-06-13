@@ -20,7 +20,6 @@ import com.kohls.msp.common.BddEnum;
 import com.kohls.msp.common.BddTestUtil;
 import com.kohls.msp.common.MspApiEnum;
 
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -35,7 +34,6 @@ import io.restassured.specification.RequestSpecification;
  */
 public abstract class EncryptionFeatureSteps extends BaseTestingStep {
 	
-	private static final String CHANNEL = "ios";
 	private static final String ENCRYPTION_CORRELATION_ID = "fdafadf"+UUID.randomUUID();
 
 	@Value("${msp.encryption.host}")
@@ -46,33 +44,29 @@ public abstract class EncryptionFeatureSteps extends BaseTestingStep {
 	private static Response encryptResponse, decryptResponse;
 	private RequestSpecification request;
 	
-	@Before
-	public void setUp() {
-		//Initialization code will go here
-	}
-	
 	/*
 	 * All Initial config code will go here for #Loyalty Services
 	 */
+	
 	@Given("^config setup for Encryption Decryption$")
 	public void config_setup_for_Encryption_Decryption() throws Throwable {
 		headers= buildHeaders();
+	}
+
+	@Given("^channel id for encryption is \"([^\"]*)\"$")
+	public void channel_id_for_encryption_is(String channel) throws Throwable {
+		headers.set(BddEnum.X_CHANNEL.value(), channel);
 	}
 	
 	/*
 	 * 1. Scenario: Encrypt plain text
 	 */
-	
+
 	@Given("^send the plain string with request body \"([^\"]*)\"$")
 	public void send_the_plain_string_with_request_body(String fileBody) throws Throwable {
 		// Prepare request
-		byte[] file = Files.readAllBytes(Paths.get(fileBody));
-		request = given().headers(headers).body(file);
-	}
-	
-	@Given("^channel id for encryption is \"([^\"]*)\"$")
-	public void channel_id_for_encryption_is(String arg1) throws Throwable {
-		headers.set(BddEnum.X_CHANNEL.value(), CHANNEL);
+				byte[] file = Files.readAllBytes(Paths.get(fileBody));
+				request = given().headers(headers).body(file);
 	}
 
 	@When("^encryption service will be called$")
@@ -81,11 +75,11 @@ public abstract class EncryptionFeatureSteps extends BaseTestingStep {
 		encryptResponse = request.when().post(encryptionHost.concat(MspApiEnum.ENCRYPT_API.value()));
 	}
 
-	@Then("^encrypted string is returned$")
-	public void encrypted_string_is_returned() throws Throwable {
+	@Then("^status code (\\d+) ok is returend$")
+	public void status_code_ok_is_returend(int arg1) throws Throwable {
 		assertThat(encryptResponse.getStatusCode()).isEqualTo(200);
 	}
-	
+
 	/*
 	 * 2. Scenario: Decrypt valid JSON
 	 */
@@ -103,17 +97,18 @@ public abstract class EncryptionFeatureSteps extends BaseTestingStep {
 	public void decryption_service_will_be_called() throws Throwable {
 		decryptResponse = request.when().post(encryptionHost.concat(MspApiEnum.DECRYPT_API.value()));
 	}
-	
-	@Then("^decrypted plain text JSON is returned \"([^\"]*)\"$")
-	public void decrypted_plain_text_JSON_is_returned(String fileBody) throws Throwable {
-		assertThat(decryptResponse.getStatusCode()).isEqualTo(200);
-		/*
-		 *  Comparing decrypted JSON response fron the decrypt API with the actual request JSON of the Encrypt API
-		 *  Assert for JSON comparison
-		 */
-		assertEquals(BddTestUtil.readJsonFile("src/test/resources/encryption/encryptionRequest.json"), decryptResponse.getBody().asString(), true);
+
+	@Then("^status code (\\d+) ok is returned$")
+	public void status_code_ok_is_returned(int arg1) throws Throwable {
+		assertThat(encryptResponse.getStatusCode()).isEqualTo(200);
 	}
-	
+
+	@Then("^return expected response message \"([^\"]*)\"$")
+	public void return_expected_response_message(String responseFile) throws Throwable {
+		assertEquals(BddTestUtil.readJsonFile(responseFile),
+				decryptResponse.getBody().asString(), true);
+	}
+
 	/*
 	 * Set Common Header
 	 */
