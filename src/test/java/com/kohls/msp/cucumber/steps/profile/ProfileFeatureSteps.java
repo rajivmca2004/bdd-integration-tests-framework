@@ -29,6 +29,8 @@ import io.restassured.specification.RequestSpecification;
  */
 public class ProfileFeatureSteps extends BaseTestingStep {
 
+	private static final String API_KEY = "JBmYK1DyITEQAmUa27kWIpOjSZyyHAJR";
+
 	private static final String APPLICATION_X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
 
 	private Response response;
@@ -50,7 +52,7 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 						.encoderConfig(EncoderConfig.encoderConfig()
 								.appendDefaultContentCharsetToContentTypeIfUndefined(false)))
 				.contentType(ContentType.URLENC);
-		headers.set(X_APP_API_KEY.value(), "JBmYK1DyITEQAmUa27kWIpOjSZyyHAJR");
+		headers.set(X_APP_API_KEY.value(), API_KEY);
 		request.headers(headers);
 	}
 
