@@ -1,10 +1,6 @@
-/**
- * 
- */
 package com.kohls.msp.common;
 
 import java.io.FileReader;
-
 import org.json.simple.parser.JSONParser;
 
 /**
@@ -21,7 +17,7 @@ public class BddTestUtil {
 			return parser.parse(new FileReader(file)).toString();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 		return null;
 	}
 }

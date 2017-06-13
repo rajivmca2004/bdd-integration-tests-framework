@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import com.kohls.msp.common.BaseTestingStep;
 import com.kohls.msp.common.MspApiEnum;
 
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -40,23 +39,17 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 	@Value("${openapi.url.HTTPS}")
 	private String openAPI;
 
-	@Before
-	public void setUp() {
-		// Initialization code will go here
+	/*
+	 * All Initial config code will go here for #Loyalty Services
+	 */
+	@Given("^app API Key header \"([^\"]*)\"$")
+	public void app_API_Key_header(String apiKey) throws Throwable {
 		headers = buildHeaders();
 		request = given()
 				.config(RestAssured.config()
 						.encoderConfig(EncoderConfig.encoderConfig()
 								.appendDefaultContentCharsetToContentTypeIfUndefined(false)))
 				.contentType(ContentType.URLENC);
-
-	}
-
-	/*
-	 * All Initial config code will go here for #Loyalty Services
-	 */
-	@Given("^app API Key header \"([^\"]*)\"$")
-	public void app_API_Key_header(String apiKey) throws Throwable {
 		headers.set(X_APP_API_KEY.value(), "JBmYK1DyITEQAmUa27kWIpOjSZyyHAJR");
 		request.headers(headers);
 	}
@@ -111,7 +104,12 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 		headers.set(HttpHeaders.CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED);
-		// headers.set(X_APP_API_KEY.value(), "JBmYK1DyITEQAmUa27kWIpOjSZyyHAJR");
 		return headers;
+	}
+
+	@Override
+	protected HttpHeaders buildHeaders(HttpHeaders httpHeaders) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

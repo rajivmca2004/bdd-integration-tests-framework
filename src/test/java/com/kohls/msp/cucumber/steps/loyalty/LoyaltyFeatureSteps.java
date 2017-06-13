@@ -6,9 +6,12 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 
 import com.kohls.msp.common.BaseTestingStep;
 import com.kohls.msp.common.BddEnum;
@@ -29,18 +32,20 @@ import io.restassured.specification.RequestSpecification;
  */
 public class LoyaltyFeatureSteps extends BaseTestingStep {
 
-	private static final String CHANNEL = "MCOM";
-	private static final String LOYALTY_CORRELATION_ID = "fdafadf";
-	private static final String APPLICATION_JSON="application/json";
+	private static final String LOYALTY_CORRELATION_ID = "fdafadf"+UUID.randomUUID();
 
 	@Value("${msp.loyalty.host}")
 	private String loyaltyHost;
 	
+	@Value("${openapi.url.HTTPS}")
+	private String openAPI;
+	
 	private Response response;
 	private RequestSpecification request;
-	
 	private static HttpHeaders headers;
-
+	
+	private static String accessToken;
+	
 	@Before
 	public void setUp() {
 		//Initialization code will go here
@@ -55,20 +60,22 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 	 */
 	@Given("^config setup for Loyalty$")
 	public void config_setup() throws Throwable {
+	}
+	
+	@Given("^channel id for loyalty is \"([^\"]*)\"$")
+	public void channel_id_for_loyaty_is(String channel) throws Throwable {
+		// Prepare request
 		headers= buildHeaders();
+		headers.set(BddEnum.X_CHANNEL.value(), channel);
 	}
 
 	@Given("^send the updated loyalty values with request body \"([^\"]*)\"$")
 	public void send_the_updated_loyalty_values_with_request_body(String fileBody) throws Throwable {
-		// Prepare request
 		byte[] file = Files.readAllBytes(Paths.get(fileBody));
 		request = given().headers(headers).body(file);
 	}
 	
-	@Given("^channel id for loyaty is \"([^\"]*)\"$")
-	public void channel_id_for_loyaty_is(String arg1) throws Throwable {
-		headers.set(BddEnum.X_CHANNEL.value(), CHANNEL);
-	}
+	
 
 	@When("^loyalty update service will be called$")
 	public void loyalty_update_service_will_be_called() throws Throwable {
@@ -102,7 +109,6 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 		response=request.when().post(loyaltyHost.concat(MspApiEnum.LOYALTY_API.value()));
 	}
 
-	
 	@Then("^customer profile is sucessfully created (\\d+) or existed (\\d+)$")
 	public void customer_profile_is_sucessfully_created_or_existed(int ok, int error) throws Throwable {
 		assertThat(response.getStatusCode()).isIn(ok, error);
@@ -110,11 +116,20 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 	
 	@Override
 	protected HttpHeaders buildHeaders() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.set(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON);
-		// Note:Need to change access token after expiry
-		headers.set(BddEnum.ACCESS_TOKEN.value(), "uZV8p1Ows3K9bMw5JAfjfEz6jhfa");
+		headers = new HttpHeaders();
+		MspUtilService mspUtilService = new MspUtilService();
+		if (StringUtils.isEmpty(accessToken)) {
+			accessToken = mspUtilService.getAccessToken(openAPI);
+		}
+		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		headers.set(BddEnum.ACCESS_TOKEN.value(), accessToken);
 		headers.set(BddEnum.X_CORRELATION_ID.value(), LOYALTY_CORRELATION_ID);
 		return headers;
+	}
+
+	@Override
+	protected HttpHeaders buildHeaders(HttpHeaders httpHeaders) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

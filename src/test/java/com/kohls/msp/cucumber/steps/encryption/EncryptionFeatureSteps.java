@@ -9,9 +9,11 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import com.kohls.msp.common.BaseTestingStep;
 import com.kohls.msp.common.BddEnum;
@@ -31,11 +33,10 @@ import io.restassured.specification.RequestSpecification;
  * @author rajiv.srivastava@kohls.com
  * @since 06/06/2017
  */
-public class EncryptionFeatureSteps extends BaseTestingStep {
+public abstract class EncryptionFeatureSteps extends BaseTestingStep {
 	
 	private static final String CHANNEL = "ios";
-	private static final String ENCRYPTION_CORRELATION_ID = "fdafadf";
-	private static final String APPLICATION_JSON="application/json";
+	private static final String ENCRYPTION_CORRELATION_ID = "fdafadf"+UUID.randomUUID();
 
 	@Value("${msp.encryption.host}")
 	private String encryptionHost;
@@ -119,10 +120,16 @@ public class EncryptionFeatureSteps extends BaseTestingStep {
 	@Override
 	protected HttpHeaders buildHeaders() {
 		HttpHeaders headers = new HttpHeaders();
-		headers.set(HttpHeaders.ACCEPT, APPLICATION_JSON);
+		headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 		headers.set(BddEnum.X_CORRELATION_ID.value(), ENCRYPTION_CORRELATION_ID);
-		headers.set(HttpHeaders.CONTENT_TYPE,APPLICATION_JSON );
+		headers.set(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_JSON_VALUE );
 		return headers;
+	}
+
+	@Override
+	protected HttpHeaders buildHeaders(HttpHeaders httpHeaders) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

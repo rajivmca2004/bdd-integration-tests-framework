@@ -13,9 +13,11 @@ import com.kohls.msp.main.Application;
  * @since 06/01/2017
  */
 @ContextConfiguration(classes = { Application.class })
-@TestPropertySource(locations = {"classpath:properties/env.properties"})
+@TestPropertySource(locations = { "classpath:properties/env.properties" })
 public abstract class BaseTestingStep {
 
 	protected abstract HttpHeaders buildHeaders();
+
+	protected abstract HttpHeaders buildHeaders(HttpHeaders httpHeaders);
 
 }

@@ -7,7 +7,7 @@ Scenario Outline: set initial configuration for Encryption-Decryption Microservi
 	And channel id for encryption is "<channel>"
 	Examples: 
 		| channel |
-		|    ios |
+		|    IOS |
 		 
 Scenario Outline: encrypt plain string 
 	Given send the plain string with request body "<body>" 

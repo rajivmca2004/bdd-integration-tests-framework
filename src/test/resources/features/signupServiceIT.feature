@@ -14,4 +14,4 @@ Scenario Outline: set initial configuration for SignUp Services
 	And response code is 200
 	Examples: 
 		|x-app-api_key  | grant_type | userId | password | client_id | secret |
-		| JBmYK1DyITEQAmUa27kWIpOjSZyyHAJR | password | rajivtest1@kohls.com | Kohls123 | JBmYK1DyITEQAmUa27kWIpOjSZyyHAJR | KnyK31GAMz585uAU |
+		| w0OaAT7UeDLisjZvxqysWE9BLL6EdbCw | password | rajivtest5@kohls.com | Kohls123 | w0OaAT7UeDLisjZvxqysWE9BLL6EdbCw | xjqqE7ajBlP7Ns3e |
