@@ -32,7 +32,7 @@ import io.restassured.specification.RequestSpecification;
  */
 public class LoyaltyFeatureSteps extends BaseTestingStep {
 
-	private static final String LOYALTY_CORRELATION_ID = "fdafadf"+UUID.randomUUID();
+	private static final String LOYALTY_CORRELATION_ID = "MSPBDD-"+UUID.randomUUID();
 
 	@Value("${msp.loyalty.host}")
 	private String loyaltyHost;
