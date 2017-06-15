@@ -29,8 +29,6 @@ import io.restassured.specification.RequestSpecification;
  */
 public class ProfileFeatureSteps extends BaseTestingStep {
 
-	private static final String API_KEY = "JBmYK1DyITEQAmUa27kWIpOjSZyyHAJR";
-
 	private static final String APPLICATION_X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
 
 	private Response response;
@@ -41,6 +39,8 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 	@Value("${openapi.url.HTTPS}")
 	private String openAPI;
 
+	@Value("${openapi.api.key}")
+	private String openAPIKey;
 	/*
 	 * All Initial config code will go here for #Loyalty Services
 	 */
@@ -52,7 +52,7 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 						.encoderConfig(EncoderConfig.encoderConfig()
 								.appendDefaultContentCharsetToContentTypeIfUndefined(false)))
 				.contentType(ContentType.URLENC);
-		headers.set(X_APP_API_KEY.value(), API_KEY);
+		headers.set(X_APP_API_KEY.value(), openAPIKey);
 		request.headers(headers);
 	}
 
