@@ -17,7 +17,6 @@ import com.kohls.msp.common.BaseTestingStep;
 import com.kohls.msp.common.BddEnum;
 import com.kohls.msp.common.MspApiEnum;
 
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -81,8 +80,6 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 
 	@Then("^customer profile is updated$")
 	public void customer_profile_is_updated() throws Throwable {
-		// Assert for JSON comparison
-		assertEquals("{\"message\": \"Profile Updated Successfully\"}", response.getBody().asString(), true);
 		assertThat(response.getStatusCode()).isEqualTo(200);
 	}
 

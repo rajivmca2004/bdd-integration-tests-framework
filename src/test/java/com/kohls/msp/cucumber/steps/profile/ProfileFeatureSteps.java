@@ -41,11 +41,19 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 
 	@Value("${openapi.api.key}")
 	private String openAPIKey;
+	
+	@Value("${msp.profile.client.id}")
+	private String clientId;
+	
+	@Value("${msp.profile.secret}")
+	private String secret;
+	
 	/*
 	 * All Initial config code will go here for #Loyalty Services
 	 */
-	@Given("^app API Key header \"([^\"]*)\"$")
-	public void app_API_Key_header(String apiKey) throws Throwable {
+
+	@Given("^grant type is \"([^\"]*)\"$")
+	public void grant_type_is(String grantType) throws Throwable {
 		headers = buildHeaders();
 		request = given()
 				.config(RestAssured.config()
@@ -54,10 +62,6 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 				.contentType(ContentType.URLENC);
 		headers.set(X_APP_API_KEY.value(), openAPIKey);
 		request.headers(headers);
-	}
-
-	@Given("^grant type is \"([^\"]*)\"$")
-	public void grant_type_is(String grantType) throws Throwable {
 		request.formParam("grant_type", grantType);
 	}
 
@@ -71,18 +75,10 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 		request.formParam("password", password);
 	}
 
-	@Given("^client id is \"([^\"]*)\"$")
-	public void client_id_is(String clientId) throws Throwable {
-		request.formParam("client_id", clientId);
-	}
-
-	@Given("^secret is \"([^\"]*)\"$")
-	public void secret_is(String secret) throws Throwable {
-		request.formParam("secret", secret);
-	}
-
 	@When("^access token service is called$")
 	public void access_token_service_is_called() throws Throwable {
+		request.formParam("client_id", clientId);
+		request.formParam("secret", secret);
 		response = request.when().post(openAPI.concat(MspApiEnum.OAPI_SIGNIN_PROFILE_API.value()));
 	}
 
@@ -111,7 +107,6 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 
 	@Override
 	protected HttpHeaders buildHeaders(HttpHeaders httpHeaders) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
