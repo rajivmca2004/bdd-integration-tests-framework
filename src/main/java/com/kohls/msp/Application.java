@@ -1,4 +1,4 @@
-package com.kohls.msp.main;
+package com.kohls.msp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

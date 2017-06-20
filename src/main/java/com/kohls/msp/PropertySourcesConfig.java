@@ -1,4 +1,4 @@
-package com.kohls.msp.main;
+package com.kohls.msp;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

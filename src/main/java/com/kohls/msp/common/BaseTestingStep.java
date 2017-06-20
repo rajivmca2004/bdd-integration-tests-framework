@@ -3,7 +3,7 @@ package com.kohls.msp.common;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.kohls.msp.main.Application;
+import com.kohls.msp.Application;
 
 /**
  * This class contains common test methods
