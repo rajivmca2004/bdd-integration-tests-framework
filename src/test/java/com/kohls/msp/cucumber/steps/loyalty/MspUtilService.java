@@ -2,8 +2,10 @@ package com.kohls.msp.cucumber.steps.loyalty;
 
 import static io.restassured.RestAssured.given;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
 import com.kohls.msp.common.BddEnum;
 import com.kohls.msp.common.MspApiEnum;
@@ -15,11 +17,10 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-public class MspUtilService{
+@Component
+public class MspUtilService {
 	private static final String ACCESS_TOKEN = "access_token";
-	private static final String SECRET_VALUE = "xjqqE7ajBlP7Ns3e";
 	private static final String SECRET = "secret";
-	private static final String CLIENT_ID_VALUE = "w0OaAT7UeDLisjZvxqysWE9BLL6EdbCw";
 	private static final String CLIENT_ID = "client_id";
 	private static final String PASSWORD_VALUE = "Kohls123";
 	private static final String EMAIL = "rajivtest5@kohls.com";
@@ -28,6 +29,12 @@ public class MspUtilService{
 	private static final String GRANT_TYPE = "grant_type";
 	private static final String APPLICATION_X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
 
+	@Value("${openapi.app.key}")
+	private String openAPIKey;
+
+	@Value("${openapi.app.secret}")
+	private String secret;
+
 	public String getAccessToken(String env) {
 
 		HttpHeaders headers = buildHeaders();
@@ -35,13 +42,9 @@ public class MspUtilService{
 				.config(RestAssured.config()
 						.encoderConfig(EncoderConfig.encoderConfig()
 								.appendDefaultContentCharsetToContentTypeIfUndefined(false)))
-				.contentType(ContentType.URLENC)
-				.headers(headers)
-				.formParam(GRANT_TYPE, PASSWORD)
-				.formParam(USER_ID, EMAIL)
-				.formParam(PASSWORD, PASSWORD_VALUE)
-				.formParam(CLIENT_ID, CLIENT_ID_VALUE)
-				.formParam(SECRET, SECRET_VALUE);
+				.contentType(ContentType.URLENC).headers(headers).formParam(GRANT_TYPE, PASSWORD)
+				.formParam(USER_ID, EMAIL).formParam(PASSWORD, PASSWORD_VALUE).formParam(CLIENT_ID, openAPIKey)
+				.formParam(SECRET, secret);
 
 		Response response = request.when().post(env.concat(MspApiEnum.OAPI_SIGNIN_PROFILE_API.value()));
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
@@ -53,7 +56,7 @@ public class MspUtilService{
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 		headers.set(HttpHeaders.CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED);
-		headers.set(BddEnum.X_APP_API_KEY.value(), CLIENT_ID_VALUE);
+		headers.set(BddEnum.X_APP_API_KEY.value(), openAPIKey);
 		return headers;
 	}
 

@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -38,6 +39,9 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 	
 	@Value("${openapi.url.HTTPS}")
 	private String openAPI;
+	
+	@Autowired
+	private MspUtilService mspUtilService;
 	
 	private Response response;
 	private RequestSpecification request;
@@ -110,7 +114,6 @@ public class LoyaltyFeatureSteps extends BaseTestingStep {
 	@Override
 	protected HttpHeaders buildHeaders() {
 		headers = new HttpHeaders();
-		MspUtilService mspUtilService = new MspUtilService();
 		if (StringUtils.isEmpty(accessToken)) {
 			accessToken = mspUtilService.getAccessToken(openAPI);
 		}

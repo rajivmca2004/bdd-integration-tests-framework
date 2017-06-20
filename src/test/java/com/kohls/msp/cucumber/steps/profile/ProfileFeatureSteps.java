@@ -39,13 +39,10 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 	@Value("${openapi.url.HTTPS}")
 	private String openAPI;
 
-	@Value("${openapi.api.key}")
+	@Value("${openapi.app.key}")
 	private String openAPIKey;
 	
-	@Value("${msp.profile.client.id}")
-	private String clientId;
-	
-	@Value("${msp.profile.secret}")
+	@Value("${openapi.app.secret}")
 	private String secret;
 	
 	/*
@@ -77,7 +74,7 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 
 	@When("^access token service is called$")
 	public void access_token_service_is_called() throws Throwable {
-		request.formParam("client_id", clientId);
+		request.formParam("client_id", openAPIKey);
 		request.formParam("secret", secret);
 		response = request.when().post(openAPI.concat(MspApiEnum.OAPI_SIGNIN_PROFILE_API.value()));
 	}

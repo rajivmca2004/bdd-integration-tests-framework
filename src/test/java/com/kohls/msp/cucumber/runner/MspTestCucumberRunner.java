@@ -1,12 +1,10 @@
 package com.kohls.msp.cucumber.runner;
 
 import org.junit.runner.RunWith;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 
-import com.kohls.msp.main.Application;
+import com.kohls.msp.Application;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
