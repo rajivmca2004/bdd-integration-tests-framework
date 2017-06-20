@@ -111,7 +111,6 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 
 	@Override
 	protected HttpHeaders buildHeaders(HttpHeaders httpHeaders) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
