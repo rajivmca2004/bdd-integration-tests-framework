@@ -32,9 +32,9 @@ import io.restassured.specification.RequestSpecification;
  * @author rajiv.srivastava@kohls.com
  * @since 06/06/2017
  */
-public abstract class EncryptionFeatureSteps extends BaseTestingStep {
+public class EncryptionFeatureSteps extends BaseTestingStep {
 	
-	private static final String ENCRYPTION_CORRELATION_ID = "fdafadf"+UUID.randomUUID();
+	private static String ENCRYPTION_CORRELATION_ID = "MSPBDD-"+UUID.randomUUID();
 
 	@Value("${msp.encryption.host}")
 	private String encryptionHost;

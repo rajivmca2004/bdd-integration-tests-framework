@@ -39,6 +39,8 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 	@Value("${openapi.url.HTTPS}")
 	private String openAPI;
 
+	@Value("${openapi.api.key}")
+	private String openAPIKey;
 	/*
 	 * All Initial config code will go here for #Loyalty Services
 	 */
@@ -50,7 +52,7 @@ public class ProfileFeatureSteps extends BaseTestingStep {
 						.encoderConfig(EncoderConfig.encoderConfig()
 								.appendDefaultContentCharsetToContentTypeIfUndefined(false)))
 				.contentType(ContentType.URLENC);
-		headers.set(X_APP_API_KEY.value(), "JBmYK1DyITEQAmUa27kWIpOjSZyyHAJR");
+		headers.set(X_APP_API_KEY.value(), openAPIKey);
 		request.headers(headers);
 	}
 
