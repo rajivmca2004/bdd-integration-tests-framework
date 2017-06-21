@@ -5,7 +5,7 @@ import static io.restassured.RestAssured.given;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.kohls.msp.common.BddEnum;
 import com.kohls.msp.common.MspApiEnum;
@@ -17,13 +17,11 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-@Component
+@Service
 public class MspUtilService {
 	private static final String ACCESS_TOKEN = "access_token";
 	private static final String SECRET = "secret";
 	private static final String CLIENT_ID = "client_id";
-	private static final String PASSWORD_VALUE = "Kohls123";
-	private static final String EMAIL = "rajivtest5@kohls.com";
 	private static final String USER_ID = "userId";
 	private static final String PASSWORD = "password";
 	private static final String GRANT_TYPE = "grant_type";
@@ -35,6 +33,12 @@ public class MspUtilService {
 	@Value("${openapi.app.secret}")
 	private String secret;
 
+	@Value("${msp.test.email}")
+	private String testEmail;
+
+	@Value("${msp.test.password}")
+	private String testPassword;
+
 	public String getAccessToken(String env) {
 
 		HttpHeaders headers = buildHeaders();
@@ -43,7 +47,7 @@ public class MspUtilService {
 						.encoderConfig(EncoderConfig.encoderConfig()
 								.appendDefaultContentCharsetToContentTypeIfUndefined(false)))
 				.contentType(ContentType.URLENC).headers(headers).formParam(GRANT_TYPE, PASSWORD)
-				.formParam(USER_ID, EMAIL).formParam(PASSWORD, PASSWORD_VALUE).formParam(CLIENT_ID, openAPIKey)
+				.formParam(USER_ID, testEmail).formParam(PASSWORD, testPassword).formParam(CLIENT_ID, openAPIKey)
 				.formParam(SECRET, secret);
 
 		Response response = request.when().post(env.concat(MspApiEnum.OAPI_SIGNIN_PROFILE_API.value()));
@@ -59,5 +63,4 @@ public class MspUtilService {
 		headers.set(BddEnum.X_APP_API_KEY.value(), openAPIKey);
 		return headers;
 	}
-
 }

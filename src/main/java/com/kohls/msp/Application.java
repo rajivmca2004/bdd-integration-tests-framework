@@ -21,15 +21,13 @@ public class Application {
 
 	private static final Resource[] DEV_PROPERTIES = new ClassPathResource[] {
 			new ClassPathResource(BddEnum.DEV_ENV.value()) };
-	private static final Resource[] TEST_PROPERTIES = new ClassPathResource[] {
-			new ClassPathResource(BddEnum.TEST_ENV.value()) };
 	private static final Resource[] LOCAL_DEFAULT_PROPERTIES = new ClassPathResource[] {
 			new ClassPathResource(BddEnum.LOCAL_ENV.value()) };
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-	
+
 	/*
 	 * Environment profiling
 	 */
@@ -41,16 +39,6 @@ public class Application {
 			PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
 			pspc.setLocations(DEV_PROPERTIES);
 			pspc.setIgnoreUnresolvablePlaceholders(true);
-			return pspc;
-		}
-	}
-
-	@Profile("test")
-	public static class TestConfig {
-		@Bean
-		public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-			PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
-			pspc.setLocations(TEST_PROPERTIES);
 			return pspc;
 		}
 	}

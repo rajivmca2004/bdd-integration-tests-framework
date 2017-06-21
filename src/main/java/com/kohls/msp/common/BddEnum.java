@@ -12,7 +12,6 @@ public enum BddEnum {
 	ACCESS_TOKEN("access_token"), 
 	X_APP_API_KEY("x-app-api_key"), 
 	DEV_ENV("application-dev.properties"), 
-	TEST_ENV("application-test.properties"), 
 	LOCAL_ENV("application-default.properties");
 
 	private String value;
