@@ -1,1 +1,1 @@
-# msp-integration-tests
+# bdd-integration-tests-framework
