@@ -6,6 +6,7 @@ package com.online.store.demo.common;
  */
 public enum ApiEnum {
 	ORDERS_API("/orders"),
+	CATALOGUES_API("/catalogues"),
 	DEV_ENV("application-dev.properties"), 
 	LOCAL_ENV("application-default.properties");
 
