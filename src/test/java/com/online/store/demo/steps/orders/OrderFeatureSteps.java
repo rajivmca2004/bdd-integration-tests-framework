@@ -1,4 +1,4 @@
-package com.online.store.demo.steps.catalogue;
+package com.online.store.demo.steps.orders;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
