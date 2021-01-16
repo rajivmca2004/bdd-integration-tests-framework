@@ -2,6 +2,7 @@
 Feature: Test Order and Catalogue Microservices Integration Test 
 
 #@ignore
+#This Order microservice will call both catalogue and customer microservice and return aggregated result
 Scenario: Fetch order 
 	Given I Set GET order service api endpoint
 	When fetch order service will be called 
@@ -11,7 +12,7 @@ Scenario: Fetch order
 Scenario Outline: Create Order 
 	Given create order data with request body "<body>" 
 	When create  order postOrderscservice will be called 
-	Then customer profile is successfully created 200 or existed 400
+	Then customer profile is successfully created 200
 	Examples: 
 		| body |
 		|    src/test/resources/orders/orderCreate.json |
