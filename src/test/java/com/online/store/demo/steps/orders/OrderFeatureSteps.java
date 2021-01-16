@@ -29,7 +29,7 @@ public class OrderFeatureSteps extends BaseTestingStep {
 	private RequestSpecification request;
 
 	/*
-	 * 1. Scenario: This Order microservice will call both catalogue and customer microservice and return aggregated result
+	 * 1. Scenario: This Order microservice will call both catalogue and customer-management microservice and return aggregated result
 	 */
 	@Given("^I Set GET order service api endpoint$")
 	public void i_Set_GET_order_service_api_endpoint() throws Throwable {

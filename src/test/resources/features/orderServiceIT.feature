@@ -2,7 +2,7 @@
 Feature: Test Order and Catalogue Microservices Integration Test 
 
 #@ignore
-#This Order microservice will call both catalogue and customer microservice and return aggregated result
+#This Order microservice will call both catalogue and customer-management microservice and return aggregated result
 Scenario: Fetch order 
 	Given I Set GET order service api endpoint
 	When fetch order service will be called 
