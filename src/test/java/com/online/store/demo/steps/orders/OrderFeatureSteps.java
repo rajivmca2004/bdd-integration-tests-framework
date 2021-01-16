@@ -2,8 +2,12 @@ package com.online.store.demo.steps.orders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.junit.Assert;
 
 import com.online.store.demo.common.ApiEnum;
 import com.online.store.demo.common.BaseTestingStep;
@@ -14,6 +18,7 @@ import cucumber.api.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import io.restassured.path.json.JsonPath;
 
 /**
  * Black Box testing BDD - Loyalty Integration Tests
@@ -45,6 +50,11 @@ public class OrderFeatureSteps extends BaseTestingStep {
 
 	@Then("^receive valid HTTP response code (\\d+)$")
 	public void receive_valid_HTTP_response_code(int ok) throws Throwable {
+		//Added Assert if orders is more than 0
+		String jsonString = response.asString();
+		List<Map<String, String>> orders = JsonPath.from(jsonString).get();
+		Assert.assertTrue(orders.size() > 0);
+		
 		assertThat(response.getStatusCode()).isEqualTo(200);
 	}
 
