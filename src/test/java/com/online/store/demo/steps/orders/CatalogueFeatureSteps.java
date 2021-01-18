@@ -2,10 +2,9 @@ package com.online.store.demo.steps.orders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,49 +16,47 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 /**
- * Integration testing BDD Order microservices- Order Feature Steps
+ * Integration testing BDD Order microservices- Catalogue Feature Steps
  *
  * @author rajiv.srivastava
  */
-public class OrderFeatureSteps extends BaseTestingStep {
+public class CatalogueFeatureSteps extends BaseTestingStep {
 
-	@Value("${orders.host}")
-	private String ordersHost;
+	@Value("${catalogues.host}")
+	private String cataloguesHost;
 
 	private static Response response;
 	private static String jsonString;
 	private static HttpHeaders headers;
 
 	/*
-	 * 1. Scenario: This Order microservice will call both catalogue and
-	 * customer-management microservice and return aggregated result
+	 * 2. Scenario: This Catalogue microservice will create order
 	 */
-	@Given("^I Set GET order service api endpoint$")
-	public void i_Set_GET_order_service_api_endpoint() throws Throwable {
+
+	@Given("^create catalogue data with request body \"([^\"]*)\"$")
+	public void create_catalogue_data_with_request_body(String fileBody) throws Throwable {
+		RestAssured.baseURI= cataloguesHost;
+		
 		RequestSpecification request = RestAssured.given();
-		RestAssured.baseURI = ordersHost.concat(ApiEnum.ORDERS_API.value());
-		request = RestAssured.given();
-		request = request.headers(buildHeaders());
+		byte[] file = Files.readAllBytes(Paths.get(fileBody));
+		request = request.contentType(ContentType.JSON).headers(buildHeaders()).body(file);
 	}
 
-	@When("^fetch order service will be called$")
-	public void fetch_order_service_will_be_called() throws Throwable {
+	@When("^create  catalogues service will be called$")
+	public void create_catalogues_service_will_be_called() throws Throwable {
 		RequestSpecification request = RestAssured.given();
-		response = request.given().get();
+		response = request.when().post(ApiEnum.CATALOGUES_API.value());
 	}
 
-	@Then("^receive valid HTTP response code (\\d+)$")
-	public void receive_valid_HTTP_response_code(int ok) throws Throwable {
-		// Added Assert if orders is more than 0
+	@Then("^catalogue created with valid HTTP response code (\\d+)$")
+	public void catalogue_created_with_valid_HTTP_response_code(int ok) throws Throwable {
 		jsonString = response.asString();
-		List<Map<String, String>> orders = JsonPath.from(jsonString).get();
-		Assert.assertTrue(orders.size() > 0);
-
+		System.out.println(jsonString);
 		assertThat(response.getStatusCode()).isEqualTo(ok);
 	}
 
