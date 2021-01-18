@@ -27,6 +27,7 @@
 	</properties>
 
 	<dependencies>
+		<!-- Spring Boot starter and dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -58,7 +59,7 @@
 			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- Automation test tools dependencies -->
+		<!-- Automation other test tools dependencies -->
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
